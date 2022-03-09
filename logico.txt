@@ -1,0 +1,184 @@
+COLEGIO (ruc, nombre, direcci—n)
+CP: {ruc}
+CAj: {}
+
+SEDE (id_sede, nombre, ruc)
+CP: {id_sede}
+CAj: {COLEGIO.ruc es clave ajena a SEDE.ruc}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: COLEGIO no se puede borrar si existe fila en SEDE
+Modificaci—n: Propagar
+	Propagar: ruc se modifica y modifica la fila SEDE
+
+PERIODO (id_periodo, nombre, ruc)
+CP: {id_periodo}
+CAj: {COLEGIO.ruc es clave ajena a PERIODO.ruc}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: COLEGIO no se puede borrar si existe fila en PERIODO
+Modificaci—n: Propagar
+	Propagar: ruc se modifica y modifica la fila PERIODO
+
+NIVEL (id_nivel, cano, nombre, id_sede)
+CP: {id_nivel}
+CAj: {NIVEL.id_sede es clave ajena a SEDE.id_sede}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: SEDE no se puede borrar si existe fila en NIVEL
+Modificaci—n: Propagar
+	Propagar: id_sede se modifica y modifica la fila NIVEL
+
+GRADO (id_grado, nombre, id_nivel)
+CP: {id_grado}
+CAj: {NIVEL.id_nivel es clave ajena a GRADO.id_nivel}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: NIVEL no se puede borrar si existe fila en GRADO
+Modificaci—n: Propagar
+	Propagar: id_nivel se modifica y modifica la fila GRADO
+
+ASIGNATURA (id_asignatura, nombre, id_grado, id_area, dni_profesor)
+CP: {id_asignatura}
+CAj: {ASIGNATURA.id_grado es clave ajena a GRADO.id_grado}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: GRADO no se puede borrar si existe fila en ASIGNATURA
+Modificaci—n: Propagar
+	Propagar: id_grado se modifica y modifica la fila ASIGNATURA
+CAj: {ASIGNATURA.id_area es clave ajena a AREA.id_area}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: AREA no se puede borrar si existe fila en ASIGNATURA
+Modificaci—n: Propagar
+	Propagar: id_area se modifica y modifica la fila ASIGNATURA
+CAj: {ASIGNATURA.dni_profesor es clave ajena a PROFESOR.dni_profesor}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: PROFESOR no se puede borrar si existe fila en ASIGNATURA
+Modificaci—n: Propagar
+	Propagar: dni_profesor se modifica y modifica la fila ASIGNATURA
+
+PROFESOR (dni_profesor, nombres, ape_mat, ape_pat, salario, sexo, lugar_nac, direccion, nivel_estudios, celular, email, fijo, estado, id_area)
+CP: {dni_profesor}
+CAj: {PROFESOR.id_area es clave ajena a AREA.id_area}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: AREA no se puede borrar si existe fila en PROFESOR
+Modificaci—n: Propagar
+	Propagar: id_area se modifica y modifica la fila PROFESOR
+Dominio de estado: [retirado, activo, deshabilitado]
+
+AREA (id_area, nombre)
+CP: {id_area}
+CAj: {}
+
+SECCION (id_seccion, nombre, id_grado)
+CP: {id_seccion}
+CAj: {SECCION.id_grado es clave ajena a GRADO.id_grado}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: GRADO no se puede borrar si existe fila en SECCION
+Modificaci—n: Propagar
+	Propagar: id_grado se modifica y modifica la fila SECCION
+
+MATRICULA (id_matricula, observacion, estado, nro_orden, turno, fecha_inicio, fecha_final, inst_proc, edad, id_seccion, dni_estudiante)
+CP: {id_matricula}
+CAj: {MATRICULA.id_seccion es clave ajena a SECCION.id_seccion}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: SECCION no se puede borrar si existe fila en MATRICULA
+Modificaci—n: Propagar
+	Propagar: id_seccion se modifica y modifica la fila MATRICULA
+CAj: {MATRICULA.dni_estudiante es clave ajena a ESTUDIANTE.id_estudiante}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: ESTUDIANTE no se puede borrar si existe fila en MATRICULA
+Modificaci—n: Propagar
+	Propagar: dni_estudiante se modifica y modifica la fila MATRICULA
+Dominio de estado: [activa, suspendida]
+
+ESTUDIANTE (dni_alumno, ape_mat, ape_pat, nombres, sexo, reso_direct, observacion, num_matri, lengua_mat, estado, fijo, lugar_nac, fecha_nac, sit_matric, celular, fijo, direccion, usuario, password)
+CP: {dni_alumno}
+CAj: {}
+Dominio de estado: [activo, suspendido, retirado, trasladado, graduado]
+
+NOTA (id_nota, fecha, nota, id_periodo)
+CP: {id_nota}
+CAj: Â{NOTA.dni_profesor es clave ajena a PROFESOR.id_profesor}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: PROFESOR no se puede borrar si existe fila en NOTA
+Modificaci—n: Propagar
+	Propagar: dni_profesor se modifica y modifica la fila NOTA
+CAj: Â{NOTA.dni_estudiante es clave ajena a ESTUDIANTE.dni_estudiante}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: ESTUDIANTE no se puede borrar si existe fila en NOTA
+Modificaci—n: Propagar
+	Propagar: dni_estudiante se modifica y modifica la fila NOTA
+CAj: Â{NOTA.id_asignatura es clave ajena a ASIGNATURA.id_asignatura}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: ASIGNATURA no se puede borrar si existe fila en NOTA
+Modificaci—n: Propagar
+	Propagar: id_asignatura se modifica y modifica la fila NOTA
+
+PARIENTE (dni_pariente, ocupacion, ape_pat, ape_mat, tipo_pariente, fijos, nombres, escolaridad, vive_con, fecha_nac, celular, usuario, password)
+CP: {dni_pariente}
+CAj: {}
+
+AULA (id_aula, nombre, capacidad, disponibilidad)
+CP: {id_aula}
+CAj: {}
+
+DIRECTIVO (id_directivo, nombres, ape_mat, ape_pat, direccion, fecha_nac, lugar_nac, estado, salario, sexo, fecha_nac, usuario, password, id_sede, id_cargo)
+CP: {id_directivo}
+CAj: {DIRECTIVO.id_sede es clave ajena a SEDE.id_sede}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: SEDE no se puede borrar si existe fila en DIRECTIVO
+Modificaci—n: Propagar
+	Propagar: id_sede se modifica y modifica la fila DIRECTIVO
+CAj: {DIRECTIVO.id_cargo es clave ajena a CARGO.id_cargo}
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: CARGO no se puede borrar si existe fila en DIRECTIVO
+Modificaci—n: Propagar
+	Propagar: id_cargo se modifica y modifica la fila DIRECTIVO
+
+CARGO (id_cargo, nombre_cargo)
+CP: {id_cargo}
+CAJ: {}
+
+RECONOCE (id_matricula, dni_pariente, acudiente)
+CP: (id_matricula, dni_pariente)
+CAj (RECONOCE.id_matricula es clave ajena a MATRICULA.id_matricula)
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: MATRICULA no se puede borrar si existe fila en RECONOCE
+Modificaci—n: Restringir
+Propagar: MATRICULA no se puede modificar si existe fila en RECONOCE
+CAj (RECONOCE.dni_pariente es clave ajena a PARIENTE.dni_pariente)
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: PARIENTE no se puede borrar si existe fila en RECONOCE
+Modificaci—n: Propagar
+	Propagar: dni_pariente se modifica y modifica la fila RECONOCE
+Dominio de acudiente: [Si, No]
+
+IMPARTE (dni_profesor, id_asignatura, id_seccion)
+CP (dni_profesor, id_asignatura, id_seccion)
+CAj (IMPARTE.dni_profesor es clave ajena a PROFESOR.dni_profesor)
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: PROFESOR no se puede borrar si existe fila en IMPARTE
+Modificaci—n: Restringir
+Propagar: PROFESOR no se puede modificar si hay fila en IMPARTE
+CAj (RECONOCE.dni_pariente es clave ajena a PARIENTE.dni_pariente)
+ÀAcepta nulos?: NO
+Borrado: Restringir
+Restringir: PARIENTE no se puede borrar si hay fila en RECONOCE
+Modificaci—n: Propagar
+	Propagar: dni_pariente se modifica y modifica la fila RECONOCE
+ 
